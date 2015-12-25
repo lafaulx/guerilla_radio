@@ -1,0 +1,28 @@
+{
+  "author": "Yaroslav Kravchenko",
+  "license": "MIT",
+  "repository": {},
+  "scripts": {
+    "compile": "webpack -p"
+  },
+  "dependencies": {
+    "react": "^0.14.3",
+    "react-dom": "^0.14.3",
+    "style-loader": "^0.13.0"
+  },
+  "devDependencies": {
+    "autoprefixer": "^6.2.1",
+    "babel-core": "^6.3.26",
+    "babel-loader": "^6.2.0",
+    "babel-preset-es2015": "^6.3.13",
+    "babel-preset-react": "^6.3.13",
+    "copy-webpack-plugin": "^0.3.3",
+    "css-loader": "^0.23.1",
+    "extract-text-webpack-plugin": "^0.9.1",
+    "less": "^2.5.3",
+    "less-loader": "^2.2.2",
+    "postcss-loader": "^0.8.0",
+    "style-loader": "^0.13.0",
+    "webpack": "^1.12.9"
+  }
+}
