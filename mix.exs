@@ -19,7 +19,8 @@ defmodule GuerillaRadio.Mixfile do
   def application do
     [mod: {GuerillaRadio, []},
      applications: [:phoenix, :phoenix_html, :cowboy, :logger,
-                    :phoenix_ecto, :postgrex]]
+                    :phoenix_ecto, :postgrex,
+                    :slack]]
   end
 
   # Specifies which paths to compile per environment.
@@ -30,12 +31,14 @@ defmodule GuerillaRadio.Mixfile do
   #
   # Type `mix help deps` for examples and options.
   defp deps do
-    [{:phoenix, "~> 1.0.4"},
+    [{:phoenix, "~> 1.1.0"},
      {:phoenix_ecto, "~> 1.1"},
      {:postgrex, ">= 0.0.0"},
      {:phoenix_html, "~> 2.1"},
      {:phoenix_live_reload, "~> 1.0", only: :dev},
-     {:cowboy, "~> 1.0"}]
+     {:cowboy, "~> 1.0"},
+     {:slack, "~> 0.3.0"},
+     {:websocket_client, git: "https://github.com/jeremyong/websocket_client"}]
   end
 
   # Aliases are shortcut or tasks specific to the current project.

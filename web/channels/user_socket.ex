@@ -2,7 +2,7 @@ defmodule GuerillaRadio.UserSocket do
   use Phoenix.Socket
 
   ## Channels
-  # channel "rooms:*", GuerillaRadio.RoomChannel
+  channel "broadcasts:*", GuerillaRadio.BroadcastChannel
 
   ## Transports
   transport :websocket, Phoenix.Transports.WebSocket

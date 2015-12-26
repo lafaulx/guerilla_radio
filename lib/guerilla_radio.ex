@@ -1,6 +1,8 @@
 defmodule GuerillaRadio do
   use Application
 
+  @slack_token ""
+
   # See http://elixir-lang.org/docs/stable/elixir/Application.html
   # for more information on OTP Applications
   def start(_type, _args) do
@@ -11,6 +13,7 @@ defmodule GuerillaRadio do
       supervisor(GuerillaRadio.Endpoint, []),
       # Start the Ecto repository
       worker(GuerillaRadio.Repo, []),
+      worker(GuerillaRadio.SlackRtm, [@slack_token, []]),
       # Here you could define other workers and supervisors as children
       # worker(GuerillaRadio.Worker, [arg1, arg2, arg3]),
     ]
