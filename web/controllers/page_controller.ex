@@ -4,12 +4,13 @@ defmodule GuerillaRadio.PageController do
   alias GuerillaRadio.Message
 
   def index(conn, params) do
-    IO.puts params["broadcast"]
+    broadcast = params["broadcast"]
+
     messages = Repo.all(
       from message in Message,
-      where: message.channel == ^params["broadcast"]
+      where: message.channel == ^broadcast
     )
 
-    render conn, "index.html", messages: messages
+    render conn, "index.html", [messages: messages, broadcast: broadcast]
   end
 end

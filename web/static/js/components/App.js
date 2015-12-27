@@ -14,7 +14,7 @@ const App = React.createClass({
 
   getInitialState: function() {
     return {
-      messages: []
+      messages: this.props.messages
     }
   },
 
@@ -43,7 +43,7 @@ const App = React.createClass({
   },
 
   render: function() {
-    let messages = this.state.messages.map(msg => <Message model={msg}/>);
+    let messages = this.state.messages.map(msg => <Message key={msg.id} model={msg}/>);
 
     console.log(messages);
 
