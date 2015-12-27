@@ -45,8 +45,6 @@ const App = React.createClass({
   render: function() {
     let messages = this.state.messages.map(msg => <Message key={msg.id} model={msg}/>);
 
-    console.log(messages);
-
     return (
       <div className='App'>
         {messages}
