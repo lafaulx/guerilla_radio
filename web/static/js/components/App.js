@@ -27,10 +27,24 @@ const App = React.createClass({
       messages.unshift(payload.body);
 
       this.setState({
-        message: messages
+        messages: messages
       });
+    });
 
-      console.log('New message', payload);
+    channel.on('message_edit', payload => {
+      let messages = this.state.messages;
+      let edited_message = payload.body;
+
+      for (let i = 0; i < messages.length; i++) {
+        if (messages[i].id === edited_message.id) {
+          messages[i] = edited_message;
+          break;
+        }
+      }
+
+      this.setState({
+        messages: messages
+      });
     });
 
     channel.join()

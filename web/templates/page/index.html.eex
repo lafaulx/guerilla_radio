@@ -2,9 +2,9 @@
   window.state = {
     broadcast: '<%= @broadcast %>',
     messages: [
-      <%= for message <- Enum.reverse(@messages) do %>
+      <%= for message <- @messages do %>
       {
-        id: '<%= message.id %>',
+        id: <%= message.id %>,
         user: '<%= message.user %>',
         text: '<%= message.text %>',
         channel: '<%= message.channel %>',

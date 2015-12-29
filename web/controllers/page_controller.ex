@@ -8,7 +8,8 @@ defmodule GuerillaRadio.PageController do
 
     messages = Repo.all(
       from message in Message,
-      where: message.channel == ^broadcast
+      where: message.channel == ^broadcast,
+      order_by: [desc: message.ts]
     )
 
     render conn, "index.html", [messages: messages, broadcast: broadcast]
