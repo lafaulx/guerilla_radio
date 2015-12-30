@@ -1,7 +1,7 @@
 defmodule GuerillaRadio.BroadcastChannel do
   use Phoenix.Channel
 
-  intercept ["message_new", "message_edit"]
+  intercept ["message_new", "message_edit", "message_delete"]
 
   def join("broadcasts:" <> _broadcast_name, _params, socket) do
     {:ok, socket}
@@ -19,6 +19,11 @@ defmodule GuerillaRadio.BroadcastChannel do
 
   def handle_out("message_edit", payload, socket) do
     push socket, "message_edit", payload
+    {:noreply, socket}
+  end
+
+  def handle_out("message_delete", payload, socket) do
+    push socket, "message_delete", payload
     {:noreply, socket}
   end
 end

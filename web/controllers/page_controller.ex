@@ -8,7 +8,7 @@ defmodule GuerillaRadio.PageController do
 
     messages = Repo.all(
       from message in Message,
-      where: message.channel == ^broadcast,
+      where: message.channel == ^broadcast and message.hidden == false,
       order_by: [desc: message.ts]
     )
 

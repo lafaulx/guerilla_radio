@@ -33,11 +33,27 @@ const App = React.createClass({
 
     channel.on('message_edit', payload => {
       let messages = this.state.messages;
-      let edited_message = payload.body;
+      let editedMessage = payload.body;
 
       for (let i = 0; i < messages.length; i++) {
-        if (messages[i].id === edited_message.id) {
-          messages[i] = edited_message;
+        if (messages[i].id === editedMessage.id) {
+          messages[i] = editedMessage;
+          break;
+        }
+      }
+
+      this.setState({
+        messages: messages
+      });
+    });
+
+    channel.on('message_delete', payload => {
+      let messages = this.state.messages;
+      let deteledMessageId = payload.body.id;
+
+      for (let i = 0; i < messages.length; i++) {
+        if (messages[i].id === deteledMessageId) {
+          messages.splice(i, 1);
           break;
         }
       }

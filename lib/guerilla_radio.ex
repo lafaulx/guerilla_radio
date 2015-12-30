@@ -1,7 +1,7 @@
 defmodule GuerillaRadio do
   use Application
 
-  @slack_token ""
+  @slack_token "xoxp-10482927584-10482927600-17388692247-a41ccca0f5"
 
   # See http://elixir-lang.org/docs/stable/elixir/Application.html
   # for more information on OTP Applications

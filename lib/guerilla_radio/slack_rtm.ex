@@ -9,15 +9,31 @@ defmodule GuerillaRadio.SlackRtm do
     {:ok, initial_state}
   end
 
-  def handle_message(%{type: "message", subtype: "message_changed", channel: channel_id, message: %{ts: ts} = message}, slack, state) do
+  def handle_message(%{type: "message", subtype: "message_changed", channel: channel_id, message: %{ts: ts, text: text}}, slack, state) do
     channel_name = slack[:channels][channel_id][:name]
 
     edited_message = Repo.get_by!(Message, %{channel: channel_name, ts: ts})
-    changeset = Message.changeset(edited_message, convert_message_params(Map.put(message, :channel, channel_id), slack))
+    changeset = Message.changeset(edited_message, %{text: text})
 
     case Repo.update(changeset) do
       {:ok, message_model} ->
         GuerillaRadio.Endpoint.broadcast! "broadcasts:" <> channel_name, "message_edit", %{body: message_model}
+      {:error, _changeset} ->
+        IO.puts "Error"
+    end
+
+    {:ok, state}
+  end
+
+  def handle_message(%{type: "message", subtype: "message_deleted", channel: channel_id, deleted_ts: deleted_ts}, slack, state) do
+    channel_name = slack[:channels][channel_id][:name]
+
+    edited_message = Repo.get_by!(Message, %{channel: channel_name, ts: deleted_ts})
+    changeset = Message.changeset(edited_message, %{hidden: true})
+
+    case Repo.update(changeset) do
+      {:ok, message_model} ->
+        GuerillaRadio.Endpoint.broadcast! "broadcasts:" <> channel_name, "message_delete", %{body: %{id: message_model.id}}
       {:error, _changeset} ->
         IO.puts "Error"
     end

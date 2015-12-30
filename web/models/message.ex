@@ -6,10 +6,11 @@ defmodule GuerillaRadio.Message do
     field :user, :string
     field :text, :string
     field :ts, :string
+    field :hidden, :boolean, default: false
   end
 
   @required_fields ~w(channel user text ts)
-  @optional_fields ~w()
+  @optional_fields ~w(hidden)
 
   @doc """
   Creates a changeset based on the `model` and `params`.
