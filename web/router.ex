@@ -19,8 +19,9 @@ defmodule GuerillaRadio.Router do
     get "/", PageController, :index
   end
 
-  # Other scopes may use custom stacks.
-  # scope "/api", GuerillaRadio do
-  #   pipe_through :api
-  # end
+  scope "/api", GuerillaRadio do
+    pipe_through :api
+
+    resources "/messages", MessageController, only: [:index]
+  end
 end

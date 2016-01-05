@@ -1,18 +1,1 @@
-<script type="text/javascript">
-  window.state = {
-    broadcast: '<%= @broadcast %>',
-    messages: [
-      <%= for message <- @messages do %>
-      {
-        id: <%= message.id %>,
-        user: '<%= message.user %>',
-        text: '<%= message.text %>',
-        channel: '<%= message.channel %>',
-        ts: '<%= message.ts %>'
-      },
-      <% end %>
-    ]
-  };
-</script>
-
 <div id="app"></div>

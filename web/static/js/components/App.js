@@ -1,6 +1,8 @@
 import React from 'react';
 import {Socket} from 'phoenix';
+import queryString from 'query-string';
 
+import MessageAPI from '../api/MessageAPI';
 import Message from './Message';
 
 let socket = new Socket('/socket', {params: {token: window.userToken}});
@@ -8,18 +10,28 @@ let socket = new Socket('/socket', {params: {token: window.userToken}});
 socket.connect();
 
 const App = React.createClass({
-  propTypes: {
-    broadcast: React.PropTypes.string.isRequired
-  },
-
   getInitialState: function() {
     return {
-      messages: this.props.messages
-    }
+      messages: []
+    };
   },
 
   componentDidMount: function() {
-    let channel = socket.channel(`broadcasts:${this.props.broadcast}`, {});
+    const broadcast = queryString.parse(window.location.search).broadcast;
+
+    MessageAPI
+    .getAll(broadcast)
+    .then(data => {
+      this.setState({
+        messages: data.messages
+      });
+
+      this.initSockets(broadcast);
+    });
+  },
+
+  initSockets: function(broadcast) {
+    const channel = socket.channel(`broadcasts:${broadcast}`, {});
 
     channel.on('message_new', payload => {
       let messages = this.state.messages;

@@ -6,7 +6,9 @@
     "compile": "webpack -p"
   },
   "dependencies": {
+    "axios": "^0.8.1",
     "moment": "^2.10.6",
+    "query-string": "^3.0.0",
     "react": "^0.14.3",
     "react-dom": "^0.14.3",
     "style-loader": "^0.13.0"
