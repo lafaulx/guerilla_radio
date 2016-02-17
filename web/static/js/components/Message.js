@@ -1,7 +1,7 @@
 import React from 'react';
 import moment from 'moment';
 
-const FORMAT = 'MMMM Do YYYY, HH:mm:ss';
+const FORMAT = 'HH:mm, MMMM Do YYYY';
 
 const Message = React.createClass({
   propTypes: {
@@ -15,7 +15,7 @@ const Message = React.createClass({
       <div className='Message'>
         <div className='Message-meta'>
           <strong>{user}</strong>
-          <span>{moment.unix(ts).format(FORMAT)}</span>
+          <span>&nbsp;at&nbsp;{moment.unix(ts).format(FORMAT)}</span>
         </div>
         <div className='Message-text' dangerouslySetInnerHTML={{__html: text}}></div>
       </div>
