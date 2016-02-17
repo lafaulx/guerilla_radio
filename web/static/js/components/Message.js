@@ -17,9 +17,7 @@ const Message = React.createClass({
           <strong>{user}</strong>
           <span>{moment.unix(ts).format(FORMAT)}</span>
         </div>
-        <div className='Message-text'>
-          {text}
-        </div>
+        <div className='Message-text' dangerouslySetInnerHTML={{__html: text}}></div>
       </div>
     );
   }

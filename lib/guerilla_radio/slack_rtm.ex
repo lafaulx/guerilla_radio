@@ -63,6 +63,26 @@ defmodule GuerillaRadio.SlackRtm do
   defp convert_message_params(%{type: "message", user: user_id, channel: channel_id, ts: ts, text: text}, slack) do
     user_name = slack[:users][user_id][:real_name]
     channel_name = slack[:channels][channel_id][:name]
-    %{channel: channel_name, user: user_name, text: text, ts: ts}
+
+    processed_text = convert_links(text)
+
+    %{channel: channel_name, user: user_name, text: processed_text, ts: ts}
+  end
+
+  def convert_links(text, re \\ ~r/(<https?:\/\/[a-z\S]+>)/i) do
+    replace_links_with_tags(text, List.flatten(Regex.scan(re, text, capture: :all_but_first)))
+  end
+
+  def convert_link_to_tag(match) do
+    link = String.slice(match, 1..-2)
+    "<a target=\"_blank\" href=\"" <> link <> "\">" <> link <> "</a>"
+  end
+
+  def replace_links_with_tags(str, []) do
+    str
+  end
+
+  def replace_links_with_tags(str, [link|tail]) do
+    replace_links_with_tags(String.replace(str, link, convert_link_to_tag(link), global: false), tail)
   end
 end
