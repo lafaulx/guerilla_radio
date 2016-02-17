@@ -64,25 +64,46 @@ defmodule GuerillaRadio.SlackRtm do
     user_name = slack[:users][user_id][:real_name]
     channel_name = slack[:channels][channel_id][:name]
 
-    processed_text = convert_links(text)
+    processed_text = convert_text_to_html(text)
 
     %{channel: channel_name, user: user_name, text: processed_text, ts: ts}
   end
 
-  def convert_links(text, re \\ ~r/(<https?:\/\/[a-z\S]+>)/i) do
-    replace_links_with_tags(text, List.flatten(Regex.scan(re, text, capture: :all_but_first)))
+  defp convert_text_to_html(text) do
+    text
+    |> convert_text_to_html(~r/(<https?:\/\/[a-z\S]+>)/i, &link_conversion_fn/1)
+    |> convert_text_to_html(~r/(\*[^*]*\*)/i, &bold_conversion_fn/1)
+    |> convert_text_to_html(~r/(\_[^_]*\_)/i, &italic_conversion_fn/1)
   end
 
-  def convert_link_to_tag(match) do
+  defp convert_text_to_html(text, replacement, conversion_fn) do
+    iterate_and_replace(text, capture(text, replacement), conversion_fn)
+  end
+
+  defp capture(text, regexp) do
+    List.flatten(Regex.scan(regexp, text, capture: :all_but_first))
+  end
+
+  defp iterate_and_replace(str, [], _) do
+    str
+  end
+
+  defp iterate_and_replace(str, [match|tail], conversion_fn) do
+    iterate_and_replace(String.replace(str, match, conversion_fn.(match), global: false), tail, conversion_fn)
+  end
+
+  defp link_conversion_fn(match) do
     link = String.slice(match, 1..-2)
     "<a target=\"_blank\" href=\"" <> link <> "\">" <> link <> "</a>"
   end
 
-  def replace_links_with_tags(str, []) do
-    str
+  defp bold_conversion_fn(match) do
+    text = String.slice(match, 1..-2)
+    "<strong>" <> text <> "</strong>"
   end
 
-  def replace_links_with_tags(str, [link|tail]) do
-    replace_links_with_tags(String.replace(str, link, convert_link_to_tag(link), global: false), tail)
+  defp italic_conversion_fn(match) do
+    text = String.slice(match, 1..-2)
+    "<em>" <> text <> "</em>"
   end
 end
