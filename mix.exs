@@ -37,7 +37,7 @@ defmodule GuerillaRadio.Mixfile do
      {:phoenix_html, "~> 2.1"},
      {:phoenix_live_reload, "~> 1.0", only: :dev},
      {:cowboy, "~> 1.0"},
-     {:slack, "~> 0.3.0"},
+     {:slack, "~> 0.4.2"},
      {:websocket_client, git: "https://github.com/jeremyong/websocket_client"}]
   end
 
