@@ -73,7 +73,7 @@ defmodule GuerillaRadio.SlackRtm do
     text
     |> convert_text_to_html(~r/(<https?:\/\/[a-z\S]+>)/i, &link_conversion_fn/1)
     |> convert_text_to_html(~r/(\*[^*]*\*)/i, &bold_conversion_fn/1)
-    |> convert_text_to_html(~r/(\_[^_]*\_)/i, &italic_conversion_fn/1)
+    # |> convert_text_to_html(~r/(\_[^_]*\_)/i, &italic_conversion_fn/1)
   end
 
   defp convert_text_to_html(text, replacement, conversion_fn) do
