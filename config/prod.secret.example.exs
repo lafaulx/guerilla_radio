@@ -9,3 +9,6 @@ config :guerilla_radio, GuerillaRadio.Repo,
   password: "postgres",
   database: "guerilla_radio_prod",
   pool_size: 20
+
+config :guerilla_radio, GuerillaRadio,
+  slack_token: "your-slack-token"
