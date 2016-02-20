@@ -20,7 +20,7 @@ defmodule GuerillaRadio.Mixfile do
     [mod: {GuerillaRadio, []},
      applications: [:phoenix, :phoenix_html, :cowboy, :logger,
                     :phoenix_ecto, :postgrex,
-                    :slack]]
+                    :slack, :timex]]
   end
 
   # Specifies which paths to compile per environment.
@@ -38,6 +38,7 @@ defmodule GuerillaRadio.Mixfile do
      {:phoenix_live_reload, "~> 1.0", only: :dev},
      {:cowboy, "~> 1.0"},
      {:slack, "~> 0.4.2"},
+     {:timex, "~> 1.0.1"},
      {:websocket_client, git: "https://github.com/jeremyong/websocket_client"}]
   end
 

@@ -6,8 +6,7 @@ defmodule GuerillaRadio.Repo.Migrations.CreateMessage do
       add :channel, :string
       add :user, :string
       add :text, :string
-      add :ts, :string
+      add :ts, :float
     end
-
   end
 end

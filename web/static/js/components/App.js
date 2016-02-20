@@ -12,18 +12,27 @@ socket.connect();
 const App = React.createClass({
   getInitialState: function() {
     return {
-      messages: []
+      messages: [],
+      hasNextPage: false,
+      queue: []
     };
   },
 
   componentDidMount: function() {
-    const broadcast = queryString.parse(window.location.search).broadcast;
+    let broadcast = queryString.parse(window.location.search).broadcast;
 
     MessageAPI
-    .getAll(broadcast)
+    .getPage({
+      broadcast: broadcast
+    })
     .then(data => {
+      let { messages } = data;
+      let hasNextPage = this.hasNextPage(messages);
+
       this.setState({
-        messages: data.messages
+        broadcast: broadcast,
+        messages: messages,
+        hasNextPage: hasNextPage
       });
 
       this.initSockets(broadcast);
@@ -34,12 +43,12 @@ const App = React.createClass({
     const channel = socket.channel(`broadcasts:${broadcast}`, {});
 
     channel.on('message_new', payload => {
-      let messages = this.state.messages;
+      let { queue } = this.state;
 
-      messages.unshift(payload.body);
+      queue.unshift(payload.body);
 
       this.setState({
-        messages: messages
+        queue: queue
       });
     });
 
@@ -85,13 +94,58 @@ const App = React.createClass({
   },
 
   render: function() {
-    let messages = this.state.messages.map(msg => <Message key={msg.id} model={msg}/>);
+    let { hasNextPage, messages, queue } = this.state;
+    let messageComps = messages.map(msg => <Message key={msg.id} model={msg}/>);
 
     return (
       <div className='App'>
-        {messages}
+        {queue.length > 0 &&
+          <button className='Flusher' onClick={this.handleFlusherClick}>
+            Append new messages
+          </button>
+        }
+        {messageComps}
+        {hasNextPage &&
+          <button className='LoadMore' onClick={this.handleLoadMoreClick}>
+            Load more
+          </button>
+        }
       </div>
     );
+  },
+
+  handleLoadMoreClick: function() {
+    let { messages, broadcast } = this.state;
+    let before = messages[messages.length - 1].ts;
+
+    MessageAPI
+    .getPage({
+      broadcast: broadcast,
+      before: before
+    })
+    .then(data => {
+      let { messages: newMessages } = data;
+      let joinedMessages = messages.concat(newMessages);
+      let hasNextPage = this.hasNextPage(newMessages);
+
+      this.setState({
+        messages: joinedMessages,
+        hasNextPage: hasNextPage
+      });
+    });
+  },
+
+  handleFlusherClick: function() {
+    let { messages, queue } = this.state;
+
+    this.setState({
+      messages: queue.concat(messages),
+      queue: []
+    });
+  },
+
+  hasNextPage: function(messages) {
+    return messages.length === 10;
   }
 });
 

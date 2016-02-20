@@ -5,7 +5,7 @@ defmodule GuerillaRadio.Message do
     field :channel, :string
     field :user, :string
     field :text, :string
-    field :ts, :string
+    field :ts, :float
     field :hidden, :boolean, default: false
   end
 

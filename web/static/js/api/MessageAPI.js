@@ -1,12 +1,10 @@
 import axios from 'axios';
 
 const MessageAPI = {
-  getAll: function(broadcast) {
+  getPage: function(params) {
     return axios
     .get('/api/messages', {
-      params: {
-        broadcast: broadcast
-      }
+      params: params
     })
     .then(function(response) {
       return response.data;
