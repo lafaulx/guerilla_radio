@@ -31,15 +31,15 @@ defmodule GuerillaRadio.Mixfile do
   #
   # Type `mix help deps` for examples and options.
   defp deps do
-    [{:phoenix, "~> 1.1.0"},
-     {:phoenix_ecto, "~> 2.0.0"},
-     {:postgrex, ">= 0.0.0"},
-     {:phoenix_html, "~> 2.1"},
-     {:phoenix_live_reload, "~> 1.0", only: :dev},
-     {:cowboy, "~> 1.0"},
+    [{:phoenix, "~> 1.1.4"},
+     {:phoenix_ecto, "~> 2.0.1"},
+     {:postgrex, ">= 0.11.1"},
+     {:phoenix_html, "~> 2.5.0"},
+     {:phoenix_live_reload, "~> 1.0.3", only: :dev},
+     {:cowboy, "~> 1.0.4"},
      {:slack, "~> 0.4.2"},
-     {:timex, "~> 1.0.1"},
-     {:websocket_client, git: "https://github.com/jeremyong/websocket_client"}]
+     {:timex, "~> 2.1.1"},
+     {:websocket_client, "~> 1.1.0"}]
   end
 
   # Aliases are shortcut or tasks specific to the current project.

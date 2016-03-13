@@ -13,11 +13,12 @@ This is a concept broadcasts application for your website that uses Slack as bac
 ## How to run the server
 
   1. clone this repo;
-  1. install dependencies with `mix deps.get`;
-  2. create and migrate db with `mix ecto.create && mix ecto.migrate`;
-  3. rename `config/dev.secret.example.exs to config/dev.secret.exs` and add Slack token there (do the same with prod config);
-  4. Start Phoenix endpoint with `mix phoenix.server`
-  5. Visit [`localhost:4000/?broadcast=broadcast_channel_name`](http://localhost:4000/?broadcast=broadcast_channel_name) and check the broadcast from your Slack channel.
+  2. setup VM with dev env if you need – `vagrant up && vagrant ssh` – source code will be in `~/guerilla_radio`;
+  3. install dependencies with `mix deps.get`;
+  4. create and migrate db with `mix ecto.create && mix ecto.migrate`;
+  5. rename `config/dev.secret.example.exs to config/dev.secret.exs` and add Slack token there (do the same with prod config);
+  6. Start Phoenix endpoint with `mix phoenix.server`
+  7. Visit [`localhost:4000/?broadcast=broadcast_channel_name`](http://localhost:4000/?broadcast=broadcast_channel_name) and check the broadcast from your Slack channel.
 
 ## And?
 

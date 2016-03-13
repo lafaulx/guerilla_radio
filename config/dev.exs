@@ -36,8 +36,8 @@ config :phoenix, :stacktrace_depth, 20
 # Configure your database
 config :guerilla_radio, GuerillaRadio.Repo,
   adapter: Ecto.Adapters.Postgres,
-  username: "postgres",
-  password: "postgres",
+  username: "vagrant",
+  password: "",
   database: "guerilla_radio_dev",
   hostname: "localhost",
   pool_size: 10
